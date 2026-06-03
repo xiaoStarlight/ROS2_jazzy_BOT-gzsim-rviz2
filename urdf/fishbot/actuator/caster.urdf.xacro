@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common_inertia.xacro"/>
+
+<xacro:macro name="caster_xacro" params="caster_name xyz">
+    <link name="${caster_name}_link">
+        <!-- 部件的外观描述 -->
+         <visual>
+            <!-- 下面是相对自己几何中心的偏移和旋转 -->
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <!-- 几何形状 -->
+             <geometry>
+                    <sphere radius="0.016"/>
+             </geometry>
+             <!-- 材质和颜色 -->
+              <material name="yellow">
+                <color rgba="1.0 1.0 0.0 0.8"/>
+              </material>
+         </visual>
+
+         <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+             <geometry>
+                    <sphere radius="0.016"/>
+             </geometry>
+         </collision>
+
+         <xacro:sphere_inertia m="1.0" r="0.016"/>
+
+     </link>
+
+  <!-- 机器人的关节，主要用来组合机器人的部件 -->
+      <joint name="${caster_name}_joint" type="fixed">
+        <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="${caster_name}_link"/>
+      </joint>
+
+            <!-- 摩擦系数、刚度系数、阻尼系数设置 -->
+    <gazebo reference="${caster_name}_link">
+        <surface>
+            <friction>
+                <ode>
+               <!-- mu是切向摩擦系数，mu2是法向摩擦系数 -->
+                    <mu>0.0</mu>
+                    <mu2>0.0</mu2>
+                </ode>
+            </friction>
+            <contact>
+                <ode>
+               <!-- kp表示接触的刚度系数，kd是阻尼系数 -->
+                    <kp>1000000000.0</kp>
+                    <kd>1.0</kd>
+                <min_depth>0.001</min_depth>
+                </ode>
+            </contact>
+        </surface>
+    </gazebo>
+
+</xacro:macro>
+</robot>

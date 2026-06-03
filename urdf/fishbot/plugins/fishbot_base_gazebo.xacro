@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <gazebo>
+        <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <!-- 
+            wheel_separation 计算公式：
+            wheel_separation = |left_wheel_y - right_wheel_y|
+    
+            其中：
+            - left_wheel_y：左轮在base_link坐标系下的y坐标（米）
+            - right_wheel_y：右轮在base_link坐标系下的y坐标（米）
+            - |...| 表示取绝对值
+            -->
+            <wheel_separation>0.20</wheel_separation>
+            <wheel_radius>0.032</wheel_radius>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+            <joint_name>left_wheel_joint</joint_name>
+            <joint_name>right_wheel_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+</robot>
