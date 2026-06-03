@@ -12,7 +12,7 @@
 - ✅ 摄像头仿真
 - ✅ Gazebo Harmonic + RViz2 联合仿真
 - ✅ ROS2 桥接通信
-
+- ✅ SLAM建图
 ---
 
 ## 📦 依赖环境
@@ -114,7 +114,7 @@ sudo apt install ros-jazzy-slam-toolbox
 ```
 确保软件包已安装
 
-在前面的launch文件成功启动了gzsim和Rviz2后，在新的终端向执行这句代码
+在前面的launch文件成功启动了gzsim和Rviz2后，在新的终端执行这句代码
 ```bash
 ros2 launch slam_toolbox online_async_launch.py \
   slam_params_file:=/path/to/your/config/slam_toolbox_params.yaml \
@@ -122,7 +122,7 @@ ros2 launch slam_toolbox online_async_launch.py \
 ```
 
 这将会启动官方的2D SLAM建图软件包
-接下来在Rviz2的ADD里面选择By topic,选择/map,然后你就可以看到2D建图了
+接下来在Rviz2的ADD里面选择By topic,接着选择/map,这样你就可以看到2D建图了
 
 当你感觉地图已经覆盖了整个环境，就可以保存它了：
 
