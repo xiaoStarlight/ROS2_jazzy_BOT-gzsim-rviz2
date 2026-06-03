@@ -1,7 +1,7 @@
 [![ROS2 Version](https://img.shields.io/badge/ROS2-Jazzy-blue)](https://docs.ros.org/en/jazzy/)
 [![Gazebo Version](https://img.shields.io/badge/Gazebo-Harmonic-orange)](https://gazebosim.org/)
 
-这是一个基于 **ROS2 Jazzy** 的机器人描述功能包，包含 FishBot 机器人的 URDF/Xacro 模型文件，支持 **Gazebo Harmonic (gz-sim)** 仿真和 **RViz2** 可视化。
+这是一个基于 **ROS2 Jazzy** 的机器人功能包，包含 FishBot 机器人的 URDF/Xacro 模型文件，支持 **Gazebo Harmonic (gz-sim)** 仿真和 **RViz2** 可视化。
 
 ---
 
