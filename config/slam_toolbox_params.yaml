@@ -1,0 +1,17 @@
+slam_toolbox:
+  ros__parameters:
+    # 关键坐标系配置
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+    use_sim_time: true      # 仿真环境下必须设为 true
+    
+    # 建图模式
+    mode: mapping
+    
+    # 优化求解器配置 (使用默认的Ceres求解器)
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    # ... 其他参数可以保持默认

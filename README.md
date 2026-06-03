@@ -29,16 +29,19 @@
 sudo apt install ros-jazzy-ros-gz ros-jazzy-ros-gz-bridge
 sudo apt install ros-jazzy-robot-state-publisher ros-jazzy-joint-state-publisher
 sudo apt install ros-jazzy-rviz2 ros-jazzy-teleop-twist-keyboard
+```
 
 🚀 快速开始
 1. 构建工作空间
-bash
+```bash
 cd ~/your_ws
 colcon build --packages-select fishbot_description
 source install/setup.bash
+```
 2. 启动仿真
-bash
+```bash
 ros2 launch fishbot_description display_robot.launch.py
+```
 这将启动：
 
 Gazebo Harmonic 仿真器
@@ -52,8 +55,9 @@ RViz2 可视化界面
 3. 控制机器人移动
 在新终端中运行键盘控制节点：
 
-bash
+```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
 键盘控制按键：
 
 按键	功能
@@ -77,8 +81,9 @@ TF（坐标变换）
 
 如果 RViz2 未自动启动，可手动运行：
 
-bash
+```bash
 rviz2 -d $(ros2 pkg prefix fishbot_description)/share/fishbot_description/config/display_robot_model.rviz
+```
 🔧 激光雷达可视化技巧
 ⚠️ 重要提示：在 Gazebo 中，激光雷达的蓝色射线有时需要手动激活才能正确跟随机器人。这是一个已知的 Gazebo Harmonic 小问题。
 
@@ -89,8 +94,9 @@ rviz2 -d $(ros2 pkg prefix fishbot_description)/share/fishbot_description/config
 
 在终端中执行以下命令：
 
-bash
+```bash
 gz model -m fishbot -l laser_link
+```
 注意：
 
 请将 fishbot 替换为你的机器人模型名称
@@ -100,3 +106,27 @@ gz model -m fishbot -l laser_link
 需要打开 Gazebo 一段时间后执行此命令才有效
 
 这通常取决于你部署的平台算力的多少，在gzsim启动lidar窗口后，可先等待几分钟让gzsim相关组件加载完成
+
+关于启动SLAM建图
+```bash
+sudo apt update
+sudo apt install ros-jazzy-slam-toolbox
+```
+确保软件包已安装
+
+在前面的launch文件成功启动了gzsim和Rviz2后，在新的终端向执行这句代码
+```bash
+ros2 launch slam_toolbox online_async_launch.py \
+  slam_params_file:=/path/to/your/config/slam_toolbox_params.yaml \
+  use_sim_time:=True
+```
+
+这将会启动官方的2D SLAM建图软件包
+接下来在Rviz2的ADD里面选择By topic,选择/map,然后你就可以看到2D建图了
+
+当你感觉地图已经覆盖了整个环境，就可以保存它了：
+
+```bash
+# 保存地图和元数据文件
+ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap "{name: {data: 'my_warehouse'}}"
+```
