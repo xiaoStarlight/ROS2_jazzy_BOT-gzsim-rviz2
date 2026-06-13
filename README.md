@@ -13,7 +13,11 @@
 - ✅ Gazebo Harmonic + RViz2 联合仿真
 - ✅ ROS2 桥接通信
 - ✅ SLAM建图
+- ✅ Nav2导航
 ---
+
+![Gazebo Harmonic 仿真截图](images/gzsim.png)
+![Gazebo Harmonic 仿真截图](images/simple_world.pgm)
 
 ## 📦 依赖环境
 

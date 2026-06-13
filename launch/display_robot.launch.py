@@ -15,7 +15,14 @@ def generate_launch_description():
     # 定义桥接配置文件路径
     gazebo_config_path = os.path.join(urdf_package_path, 'config', 'gazebo_bridge.yaml')
     
-    # 声明一个urdf目录的参数
+    # 声明 use_sim_time 参数
+    declare_use_sim_time = launch.actions.DeclareLaunchArgument(
+        name='use_sim_time',
+        default_value='true',
+        description='使用仿真时间'
+    )
+    
+    # 声明urdf目录的参数
     action_declare_arg_mode_path = launch.actions.DeclareLaunchArgument(
         name='model',
         default_value=str(default_urdf_path),
@@ -30,26 +37,30 @@ def generate_launch_description():
         substitutions_command_result, value_type=str
     )
 
-    # 机器人状态发布器
+    # 机器人状态发布器 (添加 use_sim_time)
     action_robot_state_publisher = launch_ros.actions.Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': robot_description_value}]
+        parameters=[
+            {'robot_description': robot_description_value},
+            {'use_sim_time': launch.substitutions.LaunchConfiguration('use_sim_time')}
+        ]
     )
 
-    # 关节状态发布器
+    # 关节状态发布器 (添加 use_sim_time)
     action_joint_state_publisher = launch_ros.actions.Node(
         package='joint_state_publisher',
-        executable='joint_state_publisher'
+        executable='joint_state_publisher',
+        parameters=[{'use_sim_time': launch.substitutions.LaunchConfiguration('use_sim_time')}]
     )
 
-    # 启动Gazebo  world_file_path
+    # 启动Gazebo world_file_path
     action_gz_sim = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
         ),
         launch_arguments={
-            'gz_args': world_file_path + ' -r'  
+            'gz_args': world_file_path + ' -r'
         }.items()
     )
 
@@ -69,15 +80,17 @@ def generate_launch_description():
         output='screen'
     )
 
-    # RViz2可视化
+    # RViz2可视化 (添加 use_sim_time)
     action_rviz2_node = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
         arguments=['-d', default_rviz2_config_path],
+        parameters=[{'use_sim_time': launch.substitutions.LaunchConfiguration('use_sim_time')}],
         output='screen'
     )
 
     return launch.LaunchDescription([
+        declare_use_sim_time,  # 添加这个
         action_declare_arg_mode_path,
         action_robot_state_publisher,
         action_joint_state_publisher,

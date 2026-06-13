@@ -5,19 +5,40 @@
         <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
             <left_joint>left_wheel_joint</left_joint>
             <right_joint>right_wheel_joint</right_joint>
-            <!-- 
-            wheel_separation 计算公式：
-            wheel_separation = |left_wheel_y - right_wheel_y|
-    
-            其中：
-            - left_wheel_y：左轮在base_link坐标系下的y坐标（米）
-            - right_wheel_y：右轮在base_link坐标系下的y坐标（米）
-            - |...| 表示取绝对值
-            -->
+            
+            <!-- 轮距和轮径 -->
             <wheel_separation>0.20</wheel_separation>
             <wheel_radius>0.032</wheel_radius>
+            
+            <!-- 坐标系 -->
             <frame_id>odom</frame_id>
             <child_frame_id>base_footprint</child_frame_id>
+            
+            
+            <!-- 最大线速度 (m/s) 
+                 原默认值约 1.0-2.0，建议从 3.0 开始测试 -->
+            <linear_velocity>6.0</linear_velocity>
+            
+            <!-- 最大角速度 (rad/s) 
+                 约 180度/秒 = 3.14 rad/s -->
+            <angular_velocity>5.0</angular_velocity>
+            
+            <!-- 最大加速度 (m/s²) 
+                 越大加速越快 -->
+            <linear_acceleration>5.0</linear_acceleration>
+            
+            <!-- 最大角加速度 (rad/s²) -->
+            <angular_acceleration>6.0</angular_acceleration>
+            
+            <!-- 命令话题 -->
+            <topic>/model/fishbot/cmd_vel</topic>
+            
+            <!-- 里程计发布频率 -->
+            <odometry_publish_frequency>50</odometry_publish_frequency>
+            
+            <!-- 里程计话题 -->
+            <odometry_topic>/model/fishbot/odometry</odometry_topic>
+            
         </plugin>
     </gazebo>
 

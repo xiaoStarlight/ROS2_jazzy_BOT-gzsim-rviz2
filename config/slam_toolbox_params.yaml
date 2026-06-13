@@ -3,7 +3,7 @@ slam_toolbox:
     # 关键坐标系配置
     odom_frame: odom
     map_frame: map
-    base_frame: base_link
+    base_frame: base_footprint
     scan_topic: /scan
     use_sim_time: true      # 仿真环境下必须设为 true
     
