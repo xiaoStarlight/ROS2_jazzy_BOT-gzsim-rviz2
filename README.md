@@ -17,7 +17,7 @@
 ---
 
 ![Gazebo Harmonic 仿真截图](images/gzsim.png)
-![Gazebo Harmonic 仿真截图](images/simple_world.pgm)
+![Gazebo Harmonic 2D地图](images/simple_world.pgm)
 
 ## 📦 依赖环境
 
