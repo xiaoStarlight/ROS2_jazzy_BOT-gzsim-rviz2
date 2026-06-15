@@ -37,5 +37,15 @@
         <child link="imu_link"/>
       </joint>
 
+          <!-- IMU 传感器定义 -->
+    <gazebo reference="imu_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>1</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <topic>/imu</topic>
+        </sensor>
+    </gazebo>
+
 </xacro:macro>
 </robot>
