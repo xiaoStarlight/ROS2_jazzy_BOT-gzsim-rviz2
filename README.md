@@ -9,6 +9,7 @@
 
 - ✅ 差分驱动底盘控制
 - ✅ 激光雷达 (LiDAR) 仿真
+- ✅ IMU仿真
 - ✅ 摄像头仿真
 - ✅ Gazebo Harmonic + RViz2 联合仿真
 - ✅ ROS2 桥接通信
